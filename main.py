@@ -59,7 +59,7 @@ while True:
       else:
         print("Por favor digite uma quantia válida")
     else:
-      print("A quantidade de saques diários já chegou ao limite, tente novamente amanhã ou entre em contato com a gerência")
+      print("A quantidade de saques diários já chegou ao limite\nTente novamente amanhã ou entre em contato com a gerência")
     print("#############################################\n")
     
   elif option == "3":
