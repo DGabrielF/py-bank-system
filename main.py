@@ -1,7 +1,12 @@
+import random
+
+from modules import banking_operations, user_operations
+
 menu = """
 #############################################
 ############ Banco Intergalático ############
 #############################################
+
 Seja Bem vindo, em que posso lhe ajudar hoje?
 
 [1] Depositar
@@ -9,67 +14,54 @@ Seja Bem vindo, em que posso lhe ajudar hoje?
 [3] Extrato
 [0] Sair
 
-"""
+digite o número correspondente: """
 
 balance = 0
 limit_value_per_withdrawal = 500
 WITHDRAWAL_LIMIT_PER_DAY = 3
 withdrawals_realized = 0
 statement = ""
+users = []
 
-def number_validation(input):
-  try:
-    float(input)
-    return True
-  except ValueError:
-    return False
+
+def create_current_account():
+  new_account = {}
+  surprise_bonus = random.randint(10, 100)
+  print(f"E para demonstrar a nossa alegrie em ter você conosco, você ganhou...\nR$ {surprise_bonus},00 !!!")
+  new_account['balance'] = surprise_bonus
+  pass
+
+def fetch_users():
+  pass
+
+def account_stats():
+  pass
 
 while True:
+  print(user_operations.create_user(users))
+
   option = input(menu)
   print("#############################################")
   if option == "1":
-    print("Você selecionou a opção de Depósito")
-    deposit_amount = input("Quanto você deseja depositar? ")
-    if number_validation(deposit_amount):
-      deposit_amount = float(deposit_amount)
-      if deposit_amount > 0:
-        balance += deposit_amount
-        print(f"Você depositou R$ {deposit_amount:.2f}, seu saldo atual é R$ {balance:.2f}")
-        statement += f"depósito de R$ {deposit_amount:.2f}\n"
-      else:
-        print("O valor a ser depositado deve ser maior que zero")
-    else:
-      print("Por favor digite uma quantia válida")
-    print("#############################################\n")
-
+    output = banking_operations.deposit(balance, statement)
+    balance = output['balance']
+    statement = output['statement']
   elif option == "2":
-    print("Você selecionou a opção de Saque")
-    withdrawal_amount = input("Quanto você deseja sacar? ")
-    if withdrawals_realized < WITHDRAWAL_LIMIT_PER_DAY:
-      if number_validation(withdrawal_amount):
-        withdrawal_amount = float(withdrawal_amount)
-        if withdrawal_amount <= limit_value_per_withdrawal:
-          if withdrawal_amount < balance:
-            balance -= withdrawal_amount
-            print(f"Você sacou R$ {withdrawal_amount:.2f}, seu saldo atual é R$ {balance:.2f}")
-            statement += f"saque de R$ {withdrawal_amount:.2f}\n"
-            withdrawals_realized += 1
-        else:
-          print("O valor a ser sacado não deve ser maior que o valor limite por saque")
-      else:
-        print("Por favor digite uma quantia válida")
-    else:
-      print("A quantidade de saques diários já chegou ao limite\nTente novamente amanhã ou entre em contato com a gerência")
-    print("#############################################\n")
+    output = banking_operations.withdrawal(
+      balance=balance,
+      limit_value_per_withdrawal=limit_value_per_withdrawal,
+      WITHDRAWAL_LIMIT_PER_DAY=WITHDRAWAL_LIMIT_PER_DAY,
+      withdrawals_realized=withdrawals_realized,
+      statement=statement,
+      )
+    balance = output['balance']
+    withdrawals_realized = output['withdrawals_realized']
+    statement = output['statement']
     
   elif option == "3":
-    print("Você selecionou a opção de Saque")
-    print("\n################## EXTRATO ##################")
-    print("Nenhuma movimentação realizada neste período." if not statement else statement)
-    print(f"Saldo atual: R$ {balance:.2f}")
-    print("\n#############################################")
+    banking_operations.balance_query(balance, statement=statement)
   elif option == "0":
-    print("Somos felizes por você crescer conosco.\nVolte sempre!!!")
+    print("Somos felizes por ver você crescer conosco.\nVolte sempre!!!")
     print("#############################################\n")
     break
   else :
