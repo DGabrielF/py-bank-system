@@ -1,4 +1,4 @@
-from modules import validations
+from modules import account_operations, validations
 import getpass
 import requests
 
@@ -43,7 +43,7 @@ def add_cpf(users, new_user):
 
 def add_password(user):
     while True:
-      password_min_lenght = 4
+      password_min_lenght = 5
       password_max_lenght = 10
       password = getpass.getpass(f"Digite sua senha\n(deve conter entre {password_min_lenght} e {password_max_lenght} caracteres): ")
       if not validations.range_length_interval(password, max=password_max_lenght, min=password_min_lenght):
@@ -91,3 +91,49 @@ def add_address(user):
           print("Em caso de dúvidas pesquise o CEP pelo seu endereço no site dos correios:\nhttps://buscacepinter.correios.com.br/app/localidade_logradouro/index.php")
       except Exception as e:
         print(e)
+
+def login_user(users, *, bank_logo):
+    menu = f"""
+    {bank_logo}
+    Muito bem, em que posso lhe ajudar hoje?
+
+    [1] Acessar uma conta
+    [2] Criar uma conta
+    [3] Excluir uma conta
+    [0] Sair
+
+    digite o número correspondente: """
+  
+    while True: 
+      print("Caso queira cancelar a operação digite 'sair' a qualquer momento")
+      cpf = input("Digite o seu CPF: ")
+      if cpf.lower() == "sair":
+        break
+      if not validations.cpf(cpf):
+        print("O CPF indicado não é válido")
+        print("Tente novamente")
+      for user in users:
+        if user['cpf'] == cpf:
+          user_found = user
+          break
+        else:
+          user_found = None
+          print("Infelizmente não encontramos esse CPF em nosso banco de dados")
+          print("Tente novamente")
+      if user_found:
+        break
+
+    while True:
+      password = getpass.getpass("Digite a senha: ")
+      if password.lower() == "sair":
+        break
+      if password == user_found['password']:
+        menu_option = input(menu)
+        if menu_option == "1":
+          if account_operations.fetch_accounts():
+            break
+        elif menu_option == "2":
+          if account_operations.create_current_account():
+            break
+      else:
+        print("Senha incorreta")
