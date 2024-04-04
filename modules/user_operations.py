@@ -67,14 +67,14 @@ def add_address(user):
       try:
         cep_data = get_cep_data(cep)
         if len(cep_data) > 1:
-          print("_" * 46, "\n")
+          print("_" * 45, "\n")
           print("confirme se as informações estão corretas")
           print('cep', cep_data['cep'])
           print('logradouro', cep_data['logradouro'])
           print('bairro', cep_data['bairro'])
           print('localidade', cep_data['localidade'])
           print('uf', cep_data['uf'])
-          print("_" * 46, "\n")
+          print("_" * 45, "\n")
           confirm_address = input("Digite [s] para Sim ou [n] para Não: ")
           if confirm_address[0].lower() == "s":
             address_number = input("Digite o número da sua residência,\nse ela não possuir um número deixe o campo em vazio: ")
@@ -82,7 +82,7 @@ def add_address(user):
             user['full_CEP_info'] = cep_data 
             user['address'] = f"{cep_data['logradouro']}, {address_number} - {cep_data['bairro']} - {cep_data['localidade']}/{cep_data['uf']}"
             print("Endereço armazenado com sucesso!\nAgorapodemos continuar o cadastro")
-            print("_" * 46, "\n")
+            print("_" * 45, "\n")
             break
           elif confirm_address[0].lower() == "n":
             print("Vamos tentar novamente")

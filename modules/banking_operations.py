@@ -1,5 +1,6 @@
 from modules import validations
 
+
 def deposit(balance, statement):
     print("Você selecionou a opção de Depósito")
     deposit_amount = input("Quanto você deseja depositar? ")
@@ -14,7 +15,7 @@ def deposit(balance, statement):
         print("O valor a ser depositado deve ser maior que zero")
     else:
       print("Por favor digite uma quantia válida")
-    print("_" * 46, "\n")
+    print("_" * 45, "\n")
 
 def withdrawal(*, balance, limit_value_per_withdrawal, WITHDRAWAL_LIMIT_PER_DAY, withdrawals_realized, statement):
     print("Você selecionou a opção de Saque")
@@ -35,7 +36,7 @@ def withdrawal(*, balance, limit_value_per_withdrawal, WITHDRAWAL_LIMIT_PER_DAY,
         print("Por favor digite uma quantia válida")
     else:
       print("A quantidade de saques diários já chegou ao limite\nTente novamente amanhã ou entre em contato com a gerência")
-    print("_" * 46, "\n")
+    print("_" * 45, "\n")
 
 
 def balance_query(balance, /, *, statement):
@@ -43,6 +44,6 @@ def balance_query(balance, /, *, statement):
     print("\n################## EXTRATO ##################")
     print("Nenhuma movimentação realizada neste período." if not statement else statement)
     print(f"Saldo atual: R$ {balance:.2f}")
-    print("#" * 46, "\n")
-    print("_" * 46, "\n")
+    print("#" * 45, "\n")
+    print("_" * 45, "\n")
 
