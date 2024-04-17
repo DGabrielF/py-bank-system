@@ -116,9 +116,10 @@ def add_address(user):
         confirm_address = input("Digite [s] para Sim ou [n] para Não: ")
         if confirm_address[0].lower() == "s":
           address_number = input("Digite o número da sua residência,\nse ela não possuir um número deixe o campo em vazio: ")
+          number = address_number if address_number else "S/N"
           print("Obrigado, estamos armazenando seus dados de endereço")
           user['full_CEP_info'] = cep_data 
-          user['address'] = f"{cep_data['logradouro']}, {address_number if address_number else "S/N"} - {cep_data['bairro']} - {cep_data['localidade']}/{cep_data['uf']}"
+          user['address'] = f"{cep_data['logradouro']}, {number} - {cep_data['bairro']} - {cep_data['localidade']}/{cep_data['uf']}"
           print("Endereço armazenado com sucesso!\nAgora podemos continuar o cadastro")
           print("_" * 45, "\n")
           return True
